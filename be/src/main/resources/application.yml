@@ -1,0 +1,28 @@
+spring:
+  application:
+    name:                       Spring boot
+
+  datasource:
+    driver-class-name:          org.h2.Driver
+    url:                        jdbc:h2:~/test
+    username:
+
+  jpa:
+    properties:
+      hibernate:
+        dialect:                org.hibernate.dialect.MySQLDialect
+      javax:
+        persistence:
+          schema-generation:
+            database:
+              # the action values: none, create, drop-and-create, drop
+              action:           drop-and-create
+            scripts:
+              action:           drop-and-create
+              create-target:    ./db/create.sql
+              drop-target:      ./db/drop.sql
+    show-sql:                   false
+server:
+  port: 9090
+  context-path: /calendar
+
