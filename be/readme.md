@@ -72,10 +72,12 @@
                   "longitude": 27.9772833
             }
         }' "http://localhost:9090/calendar/events"
+
+ 1. Ratting
+ 
+    curl -X PUT -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{"pollId": 1, "yes": true}' "http://localhost:9090/calendar/rating"
+
         
-        
-        
-                    
         
 1. Actuator
         
