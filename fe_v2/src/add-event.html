@@ -1,0 +1,152 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/vaadin-date-picker/vaadin-date-picker.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input-location/paper-input-location.html">
+<link rel="import" href="../bower_components/paper-people-list/paper-people-list.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="add-event">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+
+			.container {
+				margin: 40px auto;
+				padding: 20px;
+				width: 400px;
+				display: flex;
+			}
+			.container paper-people-list {
+				flex: 1;
+			}
+			.container p {
+				margin-right: 20px;
+			}
+			paper-button {
+				display: block;
+			}
+
+    </style>
+
+    <paper-card style="display: inline-block; width: 80%;">
+      <div class="card-content" style="text-align: left;">
+        <paper-input name="name" label="Name" required char-counter></paper-input>
+        <vaadin-date-picker id="startDate" label="Start Date"></vaadin-date-picker>
+        <vaadin-date-picker id="endDate" label="End Date"></vaadin-date-picker>
+        <paper-input-location maps-api-key="AIzaSyAVvTVZZLOEwZk93Dfu3kApWbZefoRF9ms" label="location"></paper-input-location>
+        <paper-material class="container">
+				  <p>Participants</p>
+				  <paper-people-list data="{{people}}" on-search-changed="handleChange"></paper-people-list>
+			  </paper-material>
+			  <paper-button raised on-tap="showData">Show me the data</paper-button>
+			  <div id="output" class="output"></div>
+
+        <!--<paper-people-list id="participants" label="Participants" data="{{people}}" on-search-changed="handleChange"></paper-people-list>-->
+      </div>
+    </paper-card>
+    <iron-ajax
+      id="gitHubSearch"
+			url="https://api.github.com/search/users"
+			method="GET"
+			params='[[searchParams]]'
+      handle-as="json"
+			on-response="handleResponse"
+			on-error="handleError">
+    </iron-ajax>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'add-event',
+      properties: {
+        startDate: {
+          type: Date,
+          notify: true
+        },
+        endDate: {
+          type: Date,
+          notify: true
+        },
+        location: {
+          type: Object,
+          notify: true
+        },
+        participants: {
+          type: Array,
+          notify: true
+        },
+        people: {
+          type: Array,
+          notify: true
+        },
+
+        searchParams: {
+          type: String
+        }
+      },
+
+      ready: function() {
+        this.searchParams = '';
+      },
+
+      handleResponse: function (e, detail) {
+        var responseItems = e.detail.response.items.slice(0, 5),
+            peopleContainer = [];
+
+				responseItems.forEach(function(element, index) {
+					peopleContainer.push({
+						"avatar": element.avatar_url,
+						"name": element.login,
+						"identifier": element.html_url
+					});
+				});
+
+				this.people = peopleContainer;
+			},
+
+			handleError: function (e, detail) {
+        console.log('test 2');
+				console.log(e.detail.response);
+			},
+
+      handleChange: function (e, detail) {
+				if (detail.search != undefined) {
+					this.searchParams = {
+						"q": detail.search
+					};
+
+					if (detail.search.length > 5) {
+						this.$.gitHubSearch.generateRequest();
+					}
+				}
+			},
+
+			showData: function (e, detail) {
+				var outputData = this.people;
+				var output = '';
+
+				outputData.forEach(function (value) {
+					output += "<p>" + value.identifier + "</p>";
+				});
+
+				this.$.output.innerHTML = output;
+			}
+    });
+  </script>
+</dom-module>
