@@ -63,20 +63,7 @@ public class InitializationService implements CommandLineRunner {
                                   ))
                                   .location(locations.get(0))
                                   .participants(Sets.newHashSet(individuals.get(0), individuals.get(1)))
-/*
-            .ratings(Sets.newHashSet(
-                    Rating.builder()
-                          .author(Individual.builder().firstName("Antonel").lastName("Pazargic").build())
-                          .stars((byte) 3)
-                          .build(),
-                    Rating.builder()
-                          .author(Individual.builder().firstName("Irina").lastName("Pazargic").build())
-                          .stars((byte) 4)
-                          .build()
-            ))
-*/
                                   .build();
-
         final Event event2 = Event.builder()
                                   .host("DB Technology S.R.L")
                                   .title("Event 2")
@@ -87,18 +74,6 @@ public class InitializationService implements CommandLineRunner {
                                   ))
                                   .location(locations.get(1))
                                   .participants(Sets.newHashSet(individuals.get(2), individuals.get(3)))
-/*
-            .ratings(Sets.newHashSet(
-                    Rating.builder()
-                          .author(Individual.builder().firstName("Liviu").lastName("Pazargic").build())
-                          .stars((byte) 3)
-                          .build(),
-                    Rating.builder()
-                          .author(Individual.builder().firstName("Magdalena").lastName("Jipa").build())
-                          .stars((byte) 4)
-                          .build()
-            ))
-*/
                                   .build();
         final List<Event> events = Arrays.asList(event1, event2);
         this.eventRepository.save(events);

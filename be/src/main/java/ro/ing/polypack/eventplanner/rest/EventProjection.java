@@ -17,6 +17,6 @@ public interface EventProjection {
     String getHost();
     String getTitle();
     String getDescription();
-    EventLocation getLocation();
     List<Individual> getParticipants();
+    EventLocation getLocation();
 }
