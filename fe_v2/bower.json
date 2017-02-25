@@ -24,8 +24,8 @@
     "paper-dialog": "PolymerElements/paper-dialog#^1.1.0",
     "vaadin-date-picker": "^1.2.1",
     "paper-input-location": "MacTheZazou/paper-input-location#^1.0.2",
-    "paper-people-list": "*",
-    "iron-icons": "PolymerElements/iron-icons#^1.2.0"
+    "iron-icons": "PolymerElements/iron-icons#^1.2.0",
+    "iron-ajax": "^1.4.3"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

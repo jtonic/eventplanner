@@ -1,14 +1,7 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 <link rel="import" href="../bower_components/google-map/google-map.html">
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="view-events">
@@ -20,29 +13,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <div style="position: absolute; width: 100%; height: 90%;">
     <google-map latitude="45.991648434144516" longitude="26.22191355314297" zoom="7" api-key="AIzaSyAVvTVZZLOEwZk93Dfu3kApWbZefoRF9ms" center vertical layout around-justified>
-      <template is="dom-repeat" items="{{locations}}">
+      <template is="dom-repeat" items="{{events}}" as="event">
         <google-map-marker
-          latitude="{{item.lat}}" longitude="{{item.long}}" title="{{item.title}}" 
-          icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png" 
-          animation="google.maps.Animation.DROP">
+                latitude="{{event.location.latitude}}" longitude="{{event.location.longitude}}" title="{{event.location.name}}"
+                icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+                animation="google.maps.Animation.DROP">
         </google-map-marker>
       </template>
     </google-map>
-    <div>
+    </div>
+    <iron-ajax
+            id="ajaxRequest"
+            url="http://localhost:9090/calendar/events/"
+            handle-as="json"
+            on-response="showMarkers"
+            debounce-duration="300">
+    </iron-ajax>
   </template>
 
   <script>
     Polymer({
       is: 'view-events',
-      
+
       ready: function() {
-        this.locations = [
+          this.$.ajaxRequest.generateRequest();
+/*
+          this.locations = [
           { lat: '44.4268', long: '26.1025', nume: 'Bucharest' },
           { lat: '47.1585', long: '27.6014', nume: 'Iasi' },
           { lat: '45.66', long: '25.61', nume: 'Brasov' },
           { lat: '44.3167', long: '23.8', nume: 'Craiova' }
         ];
-      },
+*/
+        },
+         showMarkers: function(data) {
+              console.log(data.detail.response);
+              this.events = data.detail.response._embedded.events;
+         }
     });
   </script>
 </dom-module>
