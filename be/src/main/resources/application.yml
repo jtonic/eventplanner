@@ -25,7 +25,7 @@ spring:
               # the action values: none, create, drop-and-create, drop
               action:           drop-and-create
             scripts:
-              action:           drop-and-create
+              action:           none
               create-target:    ./db/create.sql
               drop-target:      ./db/drop.sql
     show-sql:                   false
