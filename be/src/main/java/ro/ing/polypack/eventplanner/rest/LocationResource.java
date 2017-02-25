@@ -1,5 +1,6 @@
 package ro.ing.polypack.eventplanner.rest;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,9 +12,9 @@ import ro.ing.polypack.eventplanner.model.LocationDto;
  * @author Antonel Ernest Pazargic
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 public class LocationResource {
 
-    // @RequestMapping("/locations/{city}")
     @RequestMapping("/location")
     public LocationDto getLocation(@RequestParam(value = "city", required = false) String city) {
         String cty = city != null ? city : "Bucharest";

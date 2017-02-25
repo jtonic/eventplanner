@@ -27,11 +27,7 @@
 ##### POST operations
 1. Create a location
             
-            curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{
-            	"name": "Brasov",
-            	"latitude": 44.4275073,
-            	"longitude": 26.0851619
-            }' "http://localhost:9090/calendar/locations"
+            curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{"name": "Brasov", "latitude": 43.4275073,"longitude": 25.0851619}' "http://localhost:9090/calendar/locations"
 
 1. Create an individual
                 
@@ -62,16 +58,9 @@
         	"title": "Event 2"
         }' "http://localhost:9090/calendar/events"
         
-        curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{
-        	"host": "ING Services S.R.L. 2",
-        	"description": "Event 2 description",
-        	"title": "Event 2",
-        	"location": {
-                  "name": "Timisoara",
-                  "latitude": 45.4379371,
-                  "longitude": 27.9772833
-            }
-        }' "http://localhost:9090/calendar/events"
+        curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{ "host": "Cotroceni","description": "Event 5 description", "title": "Event 5", "location": { "name": "Timisoara", "latitude": 44.4379371, "longitude": 23.9772833}}' "http://localhost:9090/calendar/events"
+
+        curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{ "host": "Cotroceni","description": "Event 6 description", "title": "Event 6", "location": { "name": "Iasi", "latitude": 46.4379371, "longitude": 25.9772833}}' "http://localhost:9090/calendar/events"
 
  1. Ratting
  

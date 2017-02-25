@@ -1,9 +1,9 @@
 package ro.ing.polypack.eventplanner.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ro.ing.polypack.eventplanner.model.RatingDto;
 import ro.ing.polypack.eventplanner.repositories.PollRepository;
@@ -14,6 +14,7 @@ import ro.ing.polypack.eventplanner.repositories.PollRepository;
  * @author Antonel Ernest Pazargic
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 public class PollController {
 
     private PollRepository pollRepository;

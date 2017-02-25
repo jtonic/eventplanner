@@ -33,7 +33,7 @@ import java.util.Set;
 @EnableJpaRepositories
 @EnableTransactionManagement
 @EntityScan("ro.ing.polypack.eventplanner.entities")
-@EnableSwagger2
+// @EnableSwagger2
 public class EventPlannerApplication extends SpringBootServletInitializer {
 
     private static Class<EventPlannerApplication> applicationClass = EventPlannerApplication.class;
@@ -46,4 +46,15 @@ public class EventPlannerApplication extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(applicationClass);
     }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("http://localhost:8080");
+            }
+        };
+    }
+
 }
