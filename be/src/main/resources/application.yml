@@ -3,6 +3,12 @@ spring:
     name:                       Spring boot
 
   datasource:
+#    driver-class-name:          com.mysql.jdbc.Driver
+#    url:                        jdbc:mysql://127.0.0.1:3306/db
+#    username:                   root
+#    password:                   root
+
+
     driver-class-name:          org.h2.Driver
     url:                        jdbc:h2:~/test
     username:
@@ -10,7 +16,8 @@ spring:
   jpa:
     properties:
       hibernate:
-        dialect:                org.hibernate.dialect.MySQLDialect
+        dialect:                org.hibernate.dialect.H2Dialect
+#        dialect:                org.hibernate.dialect.MySQLDialect
       javax:
         persistence:
           schema-generation:
