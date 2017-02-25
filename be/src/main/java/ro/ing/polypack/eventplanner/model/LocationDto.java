@@ -1,4 +1,4 @@
-package ro.ing.polypack.eventplanner.entities;
+package ro.ing.polypack.eventplanner.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,12 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  * Created by Antonel Ernest Pazargic on 24/02/2017.
@@ -24,12 +18,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @ToString
 @Builder
-@Entity
-public class EventLocation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String name;
+public class LocationDto {
     private Double latitude;
     private Double longitude;
 }

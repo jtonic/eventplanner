@@ -26,3 +26,25 @@ server:
   port: 9090
   context-path: /calendar
 
+info:
+  app:
+    name:               Event planner
+    description:        Event planner Application
+    version:            0.1.0-SNAPSHOT
+  developers:
+      - name:               Antonel Ernest Pazargic
+        email:              antonel.pazargic@gmail.com
+      - name:               Irina Stan
+        email:              irina.stan@gmail.com
+
+management:
+  port:                 9091
+  context-path:         /management
+endpoints:
+  actuator:
+    enabled: true
+    sensitive: false
+  mappings:
+    sensitive: false
+  beans:
+    sensitive: false

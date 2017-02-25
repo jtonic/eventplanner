@@ -1,0 +1,7 @@
+---
+applications:
+  - name: springpong
+    buildpack: java_buildpack
+    path: target/eventplanner-0.0.1-SNAPSHOT.war
+    services:
+      - mysql
