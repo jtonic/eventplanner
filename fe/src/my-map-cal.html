@@ -1,0 +1,60 @@
+<link rel="import" href="../bower_components/google-map/google-map.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="map-cal">
+  <template>
+    <style>    
+      #google_map {
+        position: absolute;
+        margin: 0 auto;
+        width: 100%;
+        height: 90%;
+        box-sizing: border-box;
+        z-index: -100;
+      }
+    </style>
+
+    <div id="google_map">
+      <google-map latitude="45.991648434144516" longitude="26.22191355314297" zoom="7" style="z-index: -100;"
+                   api-key="AIzaSyAVvTVZZLOEwZk93Dfu3kApWbZefoRF9ms" center vertical layout around-justified>
+        <template is="dom-repeat" items="{{locations}}">
+          <google-map-marker
+              latitude="{{item.lat}}" longitude="{{item.long}}" title="{{item.title}}" 
+              icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png" 
+              animation="google.maps.Animation.DROP">
+          </google-map-marker>
+        </template>   
+      </google-map>
+    </div>
+<!--
+<iron-ajax
+    id="ajaxRequest"
+    headers='{"Access-Control-Allow-Origin": "*/*"}'
+    url="http://localhost:9090/calendar/events/"   
+    handle-as="json"
+    on-response="showMarkers"
+    debounce-duration="300"></iron-ajax>-->
+  </template>
+
+  <script>
+    Polymer({
+      is:"map-cal",
+      ready: function() {
+       // this.$.ajaxRequest.generateRequest();
+         this.locations = [
+            {lat: '44.4268', long: '26.1025', nume: 'Bucharest'},
+            {lat: '47.1585', long: '27.6014', nume: 'Iasi'},
+             {lat: '45.66', long: '25.61', nume: 'Brasov'},
+              {lat: '44.3167', long: '23.8', nume: 'Craiova'}
+        ];
+      },
+      showMarkers:function(data) {
+        console.log(data.detail.response);
+        //this.locations = data.detail.response;
+      }
+    });
+  </script>
+
+</dom-module>

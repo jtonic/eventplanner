@@ -1,0 +1,86 @@
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-date-picker/paper-date-picker.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="shared-styles.html">
+<dom-module id="new-event">
+<style include="shared-styles">
+      :host {
+        margin:0 auto;
+        padding: 20px;
+        z-index: -100;
+        position:absolute;
+        width:500px;
+      }
+
+ paper-button.indigo {
+    background-color: var(--paper-blue-600);
+    color: white;
+    --paper-button-raised-keyboard-focus: {
+      background-color: var(--paper-pink-a200) !important;
+      color: white !important;
+    };
+  }
+</style>
+<template>
+
+   <paper-card>
+        <!--<div clas="card-content">-->
+                 <paper-input name="name" label="Name" required char-counter></paper-input>
+                  <paper-input name="name" label="From" required readonly> 
+                      <paper-date-picker>/paper-date-picker>
+                  </paper-input>
+                 <div>
+                  <paper-input name="name" label="To" required>
+             
+                  </paper-input>
+                   <paper-icon-button icon="icons:date-range"></paper-icon-button>
+                <div>
+                 <paper-input name="desc" label="Description" required char-counter></paper-input>
+                 <paper-input name="city" label="Location" required></paper-input>
+                 <paper-input name="Host" label="Host" required></paper-input>
+        <!--</div>-->
+        <div class="card-actions">
+        <paper-button on-click="Save" raised class="indigo">Save</paper-button>
+        <paper-button raised class="indigo">Cancel</paper-button>
+
+  </div>
+   </paper-card>
+  
+</template>
+<script>
+    Polymer({
+        is:"new-event",
+        properties: {
+             dateFrom: {
+                   type:Date,
+                   notify:true
+            },
+            dateTo: {
+                   type:Date,
+                   notify:true 
+            },
+            description: {
+                   type:String,
+                   notify:true 
+            },
+            location: {
+                   type:String,
+                   notify:true 
+            },
+            host: {
+                   type:String,
+                   notify:true 
+            }
+         },
+         Save:function() {
+             alert('ati dat save '+this.$.description)
+         }
+    });
+
+</script>
+
+
+</dom-module>
