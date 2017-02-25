@@ -1,36 +1,101 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 
 <dom-module id="events-polls">
   <template>
     <style include="shared-styles">
       :host {
         display: block;
-
         padding: 10px;
+        position: absolute;
+        margin: 0 auto;
       }
     </style>
-
+    <style>
+      paper-progress.red {
+        --paper-progress-active-color: var(--paper-red-500);
+        --paper-progress-secondary-color: var(--paper-red-100);
+        margin: 0 auto;
+      }
+      paper-progress.green {
+        --paper-progress-active-color: var(--paper-light-green-500);
+        --paper-progress-secondary-color: var(--paper-light-green-100);
+        margin: 0 auto;
+        padding-bottom: 10px;
+      }
+      paper-icon-button.yes {
+        color: green;
+      }
+      paper-icon-button.no {
+        color: red;
+      }
+      paper-card.small {
+        width: 450px;
+        height: 250px;
+        padding: 15px;
+      }
+      .buttons {
+        text-align: center;
+      }
+    </style>
     <div class="card">
-      <div class="circle">5</div>
-      <h1>Events polls</h1>
-      <p>Events polls goes here!!!</p>
+      <template is="dom-repeat" items="{{polls}}" as="poll">
+        <paper-card heading="{{poll.title}}" class="small">
+          <div class="card-content">{{poll.description}}</div>
+          <paper-progress value="{{poll.noOfYes}}" max="200" class="green"></paper-progress>
+          <paper-progress value="{{poll.noOfNo}}" max="200" class="red"></paper-progress>
+          <div class="buttons">
+            <paper-icon-button icon="icons:thumb-up" class="yes" on-tap="voteUp">
+            </paper-icon-button>
+            &nbsp;&nbsp;
+            <paper-icon-button icon="icons:thumb-down" class="no" on-tap="voteDown">
+            </paper-icon-button>
+          </div>
+        </paper-card>
+      </template>
     </div>
+    <iron-ajax
+            id="ajaxPolls"
+            url="http://localhost:9090/calendar/polls"
+            handle-as="json"
+            on-response="showPolls"
+            debounce-duration="300">
+    </iron-ajax>
   </template>
-
   <script>
-    Polymer({
-      is: 'events-polls',
-    });
+      Polymer({
+          is: 'events-polls',
+          ready: function () {
+              this.$.ajaxPolls.generateRequest();
+          },
+
+          properties: {
+              thumbsUp: {
+                  type: Boolean,
+                  value: false,
+                  notify: true
+              }
+          },
+          showPolls: function (data) {
+              console.log(data.detail.response._embedded.polls);
+              this.polls = data.detail.response._embedded.polls;
+          },
+          vote: function(e, thumbsUp) {
+              console.log("ThumbsUp " + thumbsUp);
+          },
+          voteUp: function(e) {
+              this.vote(e, true);
+          },
+          voteDown: function(e) {
+              this.vote(e, false);
+
+          }
+      });
   </script>
 </dom-module>
